@@ -50,7 +50,7 @@ print(df.head())
 df_normalized = pd.DataFrame(scaler.fit_transform(df))
 
 # Prédiction
-prediction = model.predict(df_normalized)
+#prediction = model.predict(df_normalized)
 
 st.subheader("Prédiction de la Prime d'Assurance")
-st.write(f"La prime d'assurance estimée est de : ${prediction[0]:.2f}")
+#st.write(f"La prime d'assurance estimée est de : ${prediction[0]:.2f}")
