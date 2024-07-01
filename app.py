@@ -13,8 +13,8 @@ def normalize_data(df, scaler):
     return df
 
 # Chargement du scaler utilisé pendant l'entraînement
-scaler = joblib.load('scaler.pkl')
-
+#scaler = joblib.load('scaler.pkl')
+scaler = StandardScaler()
 # Interface utilisateur Streamlit
 st.title("Prédiction des Primes d'Assurance")
 
@@ -42,12 +42,12 @@ df = pd.DataFrame(data)
 # Encodage des variables catégorielles
 df['sex'] = df['sex'].map({'male': 1, 'female': 0})
 df['smoker'] = df['smoker'].map({'yes': 1, 'no': 0})
-df = pd.get_dummies(df, columns=['region']).astype('int')
+df = pd.get_dummies(df, columns=['region'], prefix='region')
+df = df.astype('int')
 
 
 # Normalisation des variables quantitatives
-df_normalized = normalize_data(df, scaler)
-
+df_normalized = scaler.fit_transform(df)
 # Prédiction
 prediction = model.predict(df_normalized)
 
