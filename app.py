@@ -43,6 +43,10 @@ df = pd.DataFrame(data)
 df['sex'] = df['sex'].map({'male': 1, 'female': 0})
 df['smoker'] = df['smoker'].map({'yes': 1, 'no': 0})
 df = pd.get_dummies(df, columns=['region'], prefix='region')
+for col in ['region_northeast', 'region_northwest', 'region_southeast', 'region_southwest']:
+    if col not in df.columns:
+        df[col] = 0
+        
 df = df.astype('int')
 print(df.head())
 
