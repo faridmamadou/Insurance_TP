@@ -22,7 +22,7 @@ st.title("Prédiction des Primes d'Assurance")
 age = st.number_input("Âge", min_value=0, max_value=100, value=25)
 sex = st.selectbox("Sexe", ["male", "female"])
 bmi = st.number_input("IMC", min_value=0.0, max_value=100.0, value=25.0)
-region = st.selectbox("Région", ["nord-est", "nord-ouest", "sud-est", "sud-ouest"])
+region = st.selectbox("Région", ["northeast", "northwest", "southeast", "southwest"])
 smoker = st.selectbox("Fumeur", ["yes", "no"])
 children = st.number_input("Nombre d'enfants", min_value=0, max_value=20, value=0)
 
@@ -38,7 +38,7 @@ data = {
 df = pd.DataFrame(data)
 
 # Encodage des variables catégorielles
-df['sex'] = df['sex'].map({'male': 0, 'female': 1})
+df['sex'] = df['sex'].map({'male': 1, 'female': 0})
 df['smoker'] = df['smoker'].map({'yes': 1, 'no': 0})
 df = pd.get_dummies(df, columns=['region'], drop_first=True)
 
