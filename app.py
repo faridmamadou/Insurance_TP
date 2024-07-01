@@ -9,7 +9,7 @@ model = joblib.load('best_model.pkl')
 
 # Fonction pour normaliser les variables quantitatives
 def normalize_data(df, scaler):
-    df[['age', 'bmi', 'children']] = scaler.transform(df[['age', 'bmi', 'children']])
+    df = scaler.transform(df)
     return df
 
 # Chargement du scaler utilisé pendant l'entraînement
