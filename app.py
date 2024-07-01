@@ -44,11 +44,11 @@ df['sex'] = df['sex'].map({'male': 1, 'female': 0})
 df['smoker'] = df['smoker'].map({'yes': 1, 'no': 0})
 df = pd.get_dummies(df, columns=['region'], prefix='region')
 df = df.astype('int')
-
+print(df.head())
 
 # Normalisation des variables quantitatives
 df_normalized = pd.DataFrame(scaler.fit_transform(df))
-print(df_normalized.head())
+
 # Prédiction
 prediction = model.predict(df_normalized)
 
