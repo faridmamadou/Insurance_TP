@@ -31,24 +31,19 @@ data = {
     'age': [age],
     'sex': [sex],
     'bmi': [bmi],
-    'region': [region],
+    'children': [children],
     'smoker': [smoker],
-    'children': [children]
+    'region': [region],
+    
+   
 }
 df = pd.DataFrame(data)
 
 # Encodage des variables catégorielles
 df['sex'] = df['sex'].map({'male': 1, 'female': 0})
 df['smoker'] = df['smoker'].map({'yes': 1, 'no': 0})
-df = pd.get_dummies(df, columns=['region'])
+df = pd.get_dummies(df, columns=['region']).astype('int')
 
-# Ajout des colonnes manquantes avec des zéros
-for col in ['region_northeast', 'region_northwest', 'region_southeast', 'region_southwest']:
-    if col not in df.columns:
-        df[col] = 0
-
-# Réordonnancer les colonnes pour correspondre à celles utilisées lors de l'entraînement
-df = df[['age', 'sex', 'bmi', 'children', 'smoker', 'region_northeast', 'region_northwest', 'region_southeast', 'region_southwest']]
 
 # Normalisation des variables quantitatives
 df_normalized = normalize_data(df, scaler)
