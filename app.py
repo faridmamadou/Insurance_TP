@@ -47,7 +47,7 @@ df = df.astype('int')
 
 
 # Normalisation des variables quantitatives
-df_normalized = scaler.fit_transform(df)
+df_normalized = pd.DataFrame(scaler.fit_transform(df))
 print(df_normalized.head())
 # Prédiction
 prediction = model.predict(df_normalized)
