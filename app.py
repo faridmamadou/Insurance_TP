@@ -6,17 +6,15 @@ from sklearn.preprocessing import StandardScaler
 
 # Charger le modèle pré-entraîné et le scaler
 model = joblib.load('best_model.pkl')
-#scaler = joblib.load('scaler.pkl')
-scaler = StandardScaler()
+scaler = joblib.load('scaler.pkl')
 
 # Initialisation de l'historique des prédictions
 if 'history' not in st.session_state:
     st.session_state['history'] = []
 
-# Fonction pour normaliser les variables quantitatives
+# Fonction pour normaliser les données
 def normalize_data(df, scaler):
-    df = scaler.transform(df)
-    return df
+    return pd.DataFrame(scaler.transform(df), columns=df.columns)
 
 # Page de description du dataset
 def page_description():
@@ -39,12 +37,12 @@ def page_prediction():
     st.title("Prédiction des Primes d'Assurance")
 
     # Entrées utilisateur
-    age = st.number_input("Âge", min_value=0, max_value=100)
+    age = st.number_input("Âge", min_value=0, max_value=100, value=25)
     sex = st.selectbox("Sexe", ["male", "female"])
-    bmi = st.number_input("IMC", min_value=0.0, max_value=100.0)
+    bmi = st.number_input("IMC", min_value=0.0, max_value=100.0, value=25.0)
     region = st.selectbox("Région", ["northeast", "northwest", "southeast", "southwest"])
     smoker = st.selectbox("Fumeur", ["yes", "no"])
-    children = st.number_input("Nombre d'enfants", min_value=0, max_value=20)
+    children = st.number_input("Nombre d'enfants", min_value=0, max_value=20, value=0)
 
     # Création d'un dataframe pour les entrées
     data = {
@@ -66,12 +64,18 @@ def page_prediction():
     for col in ['region_northeast', 'region_northwest', 'region_southeast', 'region_southwest']:
         if col not in df.columns:
             df[col] = 0
-    df = df.astype('int')
-   
+
+    # Réordonnancer les colonnes pour correspondre à celles utilisées lors de l'entraînement
+    df = df[['age', 'sex', 'bmi', 'children', 'smoker', 'region_northeast', 'region_northwest', 'region_southeast', 'region_southwest']]
+
+    st.write("Données avant normalisation :", df)
+
     # Bouton de prédiction
     if st.button("Prédire"):
         # Normalisation des variables quantitatives
-        df_normalized = scaler.fit_transform(df)
+        df_normalized = normalize_data(df, scaler)
+        st.write("Données après normalisation :", df_normalized)
+
         # Prédiction
         prediction = model.predict(df_normalized)
         st.subheader("Prédiction de la Prime d'Assurance")
