@@ -14,7 +14,7 @@ if 'history' not in st.session_state:
 
 # Fonction pour normaliser les variables quantitatives
 def normalize_data(df, scaler):
-    df = scaler.transform(df)
+    df[['age', 'bmi', 'children']] = scaler.transform(df[['age', 'bmi', 'children']])
     return df
 
 # Page de description du dataset
@@ -66,7 +66,9 @@ def page_prediction():
         if col not in df.columns:
             df[col] = 0
 
-    
+    # Réordonnancer les colonnes pour correspondre à celles utilisées lors de l'entraînement
+    df = df[['age', 'sex', 'bmi', 'children', 'smoker', 'region_northeast', 'region_northwest', 'region_southeast', 'region_southwest']]
+
     # Bouton de prédiction
     if st.button("Prédire"):
         # Normalisation des variables quantitatives
