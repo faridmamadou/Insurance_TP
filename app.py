@@ -39,12 +39,12 @@ def page_prediction():
     st.title("Prédiction des Primes d'Assurance")
 
     # Entrées utilisateur
-    age = st.number_input("Âge", min_value=0, max_value=100, value=25)
+    age = st.number_input("Âge", min_value=0, max_value=100)
     sex = st.selectbox("Sexe", ["male", "female"])
-    bmi = st.number_input("IMC", min_value=0.0, max_value=100.0, value=25.0)
+    bmi = st.number_input("IMC", min_value=0.0, max_value=100.0)
     region = st.selectbox("Région", ["northeast", "northwest", "southeast", "southwest"])
     smoker = st.selectbox("Fumeur", ["yes", "no"])
-    children = st.number_input("Nombre d'enfants", min_value=0, max_value=20, value=0)
+    children = st.number_input("Nombre d'enfants", min_value=0, max_value=20)
 
     # Création d'un dataframe pour les entrées
     data = {
