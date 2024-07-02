@@ -6,7 +6,8 @@ from sklearn.preprocessing import StandardScaler
 
 # Charger le modèle pré-entraîné et le scaler
 model = joblib.load('best_model.pkl')
-scaler = joblib.load('scaler.pkl')
+#scaler = joblib.load('scaler.pkl')
+scaler = StandardScaler()
 
 # Initialisation de l'historique des prédictions
 if 'history' not in st.session_state:
@@ -70,8 +71,7 @@ def page_prediction():
     # Bouton de prédiction
     if st.button("Prédire"):
         # Normalisation des variables quantitatives
-        df_normalized = normalize_data(df, scaler)
-
+        df_normalized = scaler.fit_transform(df)
         # Prédiction
         prediction = model.predict(df_normalized)
         st.subheader("Prédiction de la Prime d'Assurance")
