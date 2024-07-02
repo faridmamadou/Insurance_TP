@@ -65,7 +65,7 @@ def page_prediction():
     for col in ['region_northeast', 'region_northwest', 'region_southeast', 'region_southwest']:
         if col not in df.columns:
             df[col] = 0
-    df = df.astype('int)
+    df = df.astype('int')
    
     # Bouton de prédiction
     if st.button("Prédire"):
